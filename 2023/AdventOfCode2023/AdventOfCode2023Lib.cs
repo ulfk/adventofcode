@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System;
-using static System.Net.Mime.MediaTypeNames;
 using System.Text.RegularExpressions;
 
 namespace AdventOfCode2023;
@@ -307,7 +306,7 @@ public class AdventOfCode2023Lib
 
     private class MapEntry
     {
-        public string SecName;
+        public string SrcName;
         public long SrcStart;
         public string DstName;
         public long DstStart;
@@ -326,20 +325,45 @@ public class AdventOfCode2023Lib
             {
                 var values = lines[lineIdx]
                     .Split(' ', StringSplitOptions.RemoveEmptyEntries)
-                    .Select(x => long.Parse(x))
+                    .Select(x => long.Parse(x.Trim()))
                     .ToArray();
+
                 yield return new MapEntry
                 { 
-                    SecName = srcName, 
+                    SrcName = srcName, 
                     DstName = dstName, 
                     DstStart = values[0], 
                     SrcStart = values[1], 
-                    Length = values[2] 
+                    Length = values[2]
                 };
+
                 lineIdx++;
             }
             lineIdx++;
         }
+    }
+
+    private static long MapSrcToDst(IEnumerable<MapEntry> mappings, string srcName, string dstName, long srcValue)
+    {
+        var result = mappings
+            .Where(m => m.SrcName == srcName 
+                    && m.DstName == dstName 
+                    && srcValue >= m.SrcStart
+                    && srcValue < m.SrcStart + m.Length)
+            .Select(m => m.DstStart + (srcValue - m.SrcStart));
+        return result.Any() ? result.First() : srcValue;
+    }
+
+    private static readonly string[] MappingNames = { "seed", "soil", "fertilizer", "water", "light", "temperature", "humidity", "location" };
+
+    private static long MapSeedToLocation(IEnumerable<MapEntry> mappings, long seed)
+    {
+        var value = seed;
+        for (var idx = 0; idx < MappingNames.Length - 1; idx++)
+        {
+            value = MapSrcToDst(mappings, MappingNames[idx], MappingNames[idx + 1], value);
+        }
+        return value;
     }
 
     public static long Day05_1(string input)
@@ -350,12 +374,73 @@ public class AdventOfCode2023Lib
         var seeds = lines[lineIdx]
             .Split(':')[1]
             .Split(' ', StringSplitOptions.RemoveEmptyEntries)
-            .Select(x => long.Parse(x))
+            .Select(x => long.Parse(x.Trim()))
             .ToArray();
         lineIdx += 2;
         var maps = ExtractMappings(lines, lineIdx).ToList();
 
-        //TODO do the mapping
+        result = seeds.Select(s => MapSeedToLocation(maps, s)).Min();
+
+        return result;
+    }
+
+    private static long MinDstForSrc(IEnumerable<MapEntry> mappings, string srcName, string dstName, 
+        long srcValue, long range)
+    {
+        var result = mappings
+            .Where(m => m.SrcName == srcName
+                    && m.DstName == dstName
+                    && srcValue >= m.SrcStart
+                    && srcValue < m.SrcStart + m.Length)
+            .Select(m => (Start: m.DstStart + (srcValue - m.SrcStart), Length: m.Length - (srcValue - m.SrcStart)));
+
+        // TODO
+        // The initial idea was to use the minimum in all mappings.
+        // But we only search the minimum of the location (which is th last mapping).
+        // Seems like we get one or two resulting ranges for each mapping, dpending if all seed values
+        // fit into the defined mapping range (one resutl range) or not (two result ranges).
+
+
+        if(result.Any())
+        {
+            var res = result.First();
+            if (res.Length < range)
+            {
+
+            }
+        }
+        
+        throw new NotImplementedException();
+    }
+
+    private static long MapSeedRangeToLocation(IEnumerable<MapEntry> mappings, long seed, long range)
+    {
+        var value = seed;
+        for (var idx = 0; idx < MappingNames.Length - 1; idx++)
+        {
+            value = MinDstForSrc(mappings, MappingNames[idx], MappingNames[idx + 1], value, range);
+        }
+        return value;
+    }
+
+    public static long Day05_2(string input)
+    {
+        long result = 0;
+        var lines = Regex.Split(input, "\r\n|\r|\n");
+        var lineIdx = 0;
+        var seeds = lines[lineIdx]
+            .Split(':')[1]
+            .Split(' ', StringSplitOptions.RemoveEmptyEntries)
+            .Select(x => long.Parse(x.Trim()))
+            .ToArray();
+        lineIdx += 2;
+        var maps = ExtractMappings(lines, lineIdx).ToList();
+
+        for (var idx = 0; idx < seeds.Length; idx += 2)
+        {
+            var res = MapSeedRangeToLocation(maps, seeds[idx], seeds[idx + 1]);
+            if (res < result) result = res;
+        }
 
         return result;
     }
