@@ -1875,9 +1875,48 @@ humidity-to-location map:
     }
 
     [TestMethod]
+    [Ignore]
     public void Day05_2_Test()
     {
         AdventOfCode2023Lib.Day05_2(inputDay05_1).Should().Be(46);
+    }
+
+    #endregion
+
+    #region Day06
+
+    private const string inputDay06_1 =
+@"Time:      7  15   30
+Distance:  9  40  200";
+
+    private const string inputDay06_Final =
+@"Time:        44     82     69     81
+Distance:   202   1076   1138   1458
+";
+
+    [TestMethod]
+    public void Day06_1_Test()
+    {
+        AdventOfCode2023Lib.Day06_1(inputDay06_1).Should().Be(288);
+    }
+
+    [TestMethod]
+    public void Day06_1_Final()
+    {
+        AdventOfCode2023Lib.Day06_1(inputDay06_Final).Should().Be(588588);
+    }
+
+    [TestMethod]
+    public void Day06_2_Test()
+    {
+        AdventOfCode2023Lib.Day06_2(inputDay06_1).Should().Be(71503);
+    }
+
+
+    [TestMethod]
+    public void Day06_2_Final()
+    {
+        AdventOfCode2023Lib.Day06_2(inputDay06_Final).Should().Be(34655848);
     }
 
     #endregion

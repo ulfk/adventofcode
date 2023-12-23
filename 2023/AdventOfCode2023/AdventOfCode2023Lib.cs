@@ -397,8 +397,8 @@ public class AdventOfCode2023Lib
         // TODO
         // The initial idea was to use the minimum in all mappings.
         // But we only search the minimum of the location (which is th last mapping).
-        // Seems like we get one or two resulting ranges for each mapping, dpending if all seed values
-        // fit into the defined mapping range (one resutl range) or not (two result ranges).
+        // Seems like we get one or two resulting ranges for each mapping, depending if all seed values
+        // fit into the defined mapping range (one resulting range) or not (two resulting ranges).
 
 
         if(result.Any())
@@ -445,6 +445,53 @@ public class AdventOfCode2023Lib
         return result;
     }
 
+    #endregion
+
+    #region Day06
+
+    private static long[] Day06_ToLongs(string input) => 
+        input
+        .Split(' ', StringSplitOptions.RemoveEmptyEntries)
+        .Skip(1)
+        .Select(long.Parse)
+        .ToArray();
+
+    public static long Day06_1(string input)
+    {
+        long result = 1;
+        var lines = Regex.Split(input, "\r\n|\r|\n");
+        var times = Day06_ToLongs(lines[0]);
+        var dists = Day06_ToLongs(lines[1]);
+
+        for (var idx = 0; idx < times.Length; idx++)
+        {
+            var greater = 0;
+            for (var speed = 1; speed < times[idx]; speed++)
+            {
+                if (dists[idx] < (times[idx] - speed) * speed) greater++;
+            }
+            if (greater > 0) result *= greater;
+        }
+
+        return result;
+    }
+
+    private static long Day06_ToLong(string input) => long.Parse(string.Join("", input.Split(' ', StringSplitOptions.RemoveEmptyEntries).Skip(1)));
+
+    public static long Day06_2(string input)
+    {
+        long result = 0;
+        var lines = Regex.Split(input, "\r\n|\r|\n");
+        var time = Day06_ToLong(lines[0]);
+        var dist = Day06_ToLong(lines[1]);
+
+        for (var speed = 1; speed < time; speed++)
+        {
+            if (dist < (time - speed) * speed) result++;
+        }
+
+        return result;
+    }
     #endregion
 }
 
