@@ -12,7 +12,7 @@ public class AdventOfCode2023Lib
 {
     private static string[] SplitLines(string lines)
     {
-        char[] delimiters = new char[] { '\r', '\n' };
+        char[] delimiters = ['\r', '\n'];
         return lines.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
     }
 
@@ -26,14 +26,15 @@ public class AdventOfCode2023Lib
         {
             var digits = line
                 .Select(c => c - 48)
-                .Where(c => c >= 0 && c <= 9);
+                .Where(c => c >= 0 && c <= 9)
+                .ToArray();
             sum += digits.First() * 10 + digits.Last();
         }
 
         return sum;
     }
 
-    private static Dictionary<string, long> NumberWords = new Dictionary<string, long>()
+    private static readonly Dictionary<string, long> NumberWords = new Dictionary<string, long>()
     {
         {"zero", 0 },
         {"one", 1 },
@@ -64,7 +65,7 @@ public class AdventOfCode2023Lib
                 }
                 else
                 {
-                    var numberWordMatches = NumberWords.Where(nw => tempLine.StartsWith(nw.Key));
+                    var numberWordMatches = NumberWords.Where(nw => tempLine.StartsWith(nw.Key)).ToArray();
                     if (numberWordMatches.Any())
                     {
                         var (word, number) = numberWordMatches.First();
@@ -86,7 +87,7 @@ public class AdventOfCode2023Lib
 
     #region Day02
 
-    private static Dictionary<string,long> ColorValues = new Dictionary<string,long>()
+    private static readonly Dictionary<string,long> ColorValues = new Dictionary<string,long>()
     {
         {"red", 12 },
         {"green", 13 },
@@ -101,7 +102,7 @@ public class AdventOfCode2023Lib
     private static IEnumerable<(long Value, string Color)> Day02_ToSetList(string setList)
     {
         return setList
-            .Split(new char[] { ';', ',' }, StringSplitOptions.RemoveEmptyEntries)
+            .Split((char[])[';', ','], StringSplitOptions.RemoveEmptyEntries)
             .Select(s => s.Split(' ', StringSplitOptions.RemoveEmptyEntries))
             .Select(s => (Value: long.Parse(s[0].Trim()), Color: s[1].Trim()));
     }
@@ -132,7 +133,6 @@ public class AdventOfCode2023Lib
         foreach (var line in lines)
         {
             var game = line.Split(':', StringSplitOptions.RemoveEmptyEntries);
-            var gameNumber = Day02_ToGameNumber(game[0]);
             var sets = Day02_ToSetList(game[1]);
 
             var power = sets
@@ -181,7 +181,7 @@ public class AdventOfCode2023Lib
 
     private static bool ContainsSymbol(string text, int start, int end) => text.Substring(start, (end - start) + 1).Any(IsSymbol);
     private static bool IsSymbol(char chr) => !IsDigit(chr) && chr != '.';
-    private static bool IsDigit(char chr) => (chr >= '0' && chr <= '9');
+    private static bool IsDigit(char chr) => chr is >= '0' and <= '9';
 
     public static long Day03_2(string input)
     {
@@ -191,7 +191,7 @@ public class AdventOfCode2023Lib
         {
             var line = lines[row];
             var offset = 0;
-            var idx = 0;
+            int idx;
             while ((idx = line.IndexOf('*', offset)) > 0)
             {
                 var numbers = new List<long>();
@@ -350,13 +350,15 @@ public class AdventOfCode2023Lib
                     && m.DstName == dstName 
                     && srcValue >= m.SrcStart
                     && srcValue < m.SrcStart + m.Length)
-            .Select(m => m.DstStart + (srcValue - m.SrcStart));
+            .Select(m => m.DstStart + (srcValue - m.SrcStart))
+            .ToArray();
         return result.Any() ? result.First() : srcValue;
     }
 
-    private static readonly string[] MappingNames = { "seed", "soil", "fertilizer", "water", "light", "temperature", "humidity", "location" };
+    private static readonly string[] MappingNames = 
+        [ "seed", "soil", "fertilizer", "water", "light", "temperature", "humidity", "location" ];
 
-    private static long MapSeedToLocation(IEnumerable<MapEntry> mappings, long seed)
+    private static long MapSeedToLocation(List<MapEntry> mappings, long seed)
     {
         var value = seed;
         for (var idx = 0; idx < MappingNames.Length - 1; idx++)
@@ -368,7 +370,6 @@ public class AdventOfCode2023Lib
 
     public static long Day05_1(string input)
     {
-        long result = 0;
         var lines = Regex.Split(input, "\r\n|\r|\n");
         var lineIdx = 0;
         var seeds = lines[lineIdx]
@@ -379,7 +380,7 @@ public class AdventOfCode2023Lib
         lineIdx += 2;
         var maps = ExtractMappings(lines, lineIdx).ToList();
 
-        result = seeds.Select(s => MapSeedToLocation(maps, s)).Min();
+        var result = seeds.Select(s => MapSeedToLocation(maps, s)).Min();
 
         return result;
     }
@@ -392,7 +393,8 @@ public class AdventOfCode2023Lib
                     && m.DstName == dstName
                     && srcValue >= m.SrcStart
                     && srcValue < m.SrcStart + m.Length)
-            .Select(m => (Start: m.DstStart + (srcValue - m.SrcStart), Length: m.Length - (srcValue - m.SrcStart)));
+            .Select(m => (Start: m.DstStart + (srcValue - m.SrcStart), Length: m.Length - (srcValue - m.SrcStart)))
+            .ToArray();
 
         // TODO
         // The initial idea was to use the minimum in all mappings.
@@ -413,7 +415,7 @@ public class AdventOfCode2023Lib
         throw new NotImplementedException();
     }
 
-    private static long MapSeedRangeToLocation(IEnumerable<MapEntry> mappings, long seed, long range)
+    private static long MapSeedRangeToLocation(List<MapEntry> mappings, long seed, long range)
     {
         var value = seed;
         for (var idx = 0; idx < MappingNames.Length - 1; idx++)
