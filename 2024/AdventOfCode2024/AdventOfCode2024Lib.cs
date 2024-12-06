@@ -441,4 +441,87 @@ public class AdventOfCode2024Lib
     }
     
     #endregion
+    
+    #region Day06
+
+    public static int Day06_1(string input)
+    {
+        var lines = SplitLines(input);
+        var width = lines.First().Length;
+        var height = lines.Length;
+        var x = 0;
+        var y = 0;
+        var steps = 1;
+        // find beginning position
+        for (var idx = 0; idx < lines.Length; idx++)
+        {
+            x = lines[idx].IndexOf('^');
+            if (x != -1)
+            {
+                y = idx;
+                break;
+            }
+        }
+
+        // four possible moves to iterate
+        var moves = new[]
+        {
+            (x: 0, y: -1), 
+            (x: 1, y: 0),
+            (x: 0, y: 1),
+            (x: -1, y: 0)
+        };
+        var moveIdx = 0;
+
+        // log where we have been as we need the number of distinct visited positions
+        var pathLog = new char[width, height];
+        // we are already visiting one position
+        pathLog[x, y] = 'X';
+
+        var isOnMap = true;
+        while (isOnMap)
+        {
+            var nextX = x + moves[moveIdx].x;
+            var nextY = y + moves[moveIdx].y;
+            isOnMap = IsOnMap(nextX, nextY, width, height);
+            if (isOnMap)
+            {
+                if (lines[nextY][nextX] == '#')
+                {
+                    pathLog[nextX, nextY] = '#';
+                    moveIdx++;
+                    if (moveIdx == moves.Length)
+                    {
+                        moveIdx = 0;
+                    }
+                }
+                else
+                {
+                    x = nextX;
+                    y = nextY;
+                    if (pathLog[x, y] == 0)
+                    {
+                        steps++;
+                        pathLog[x, y] = 'X';
+                    }
+                }
+            }
+        }
+
+        for (y = 0; y < height; y++)
+        {
+            for (x = 0; x < width; x++)
+            {
+                Console.Write(pathLog[x, y] > 0 ? pathLog[x, y] : '.');
+            }
+            Console.WriteLine();
+        }
+
+        return steps;
+    }
+
+    private static bool IsOnMap(int x, int y, int width, int height)
+        => x >= 0 && x < width && y >= 0 && y < height;
+
+    #endregion
 }
