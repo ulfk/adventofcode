@@ -185,7 +185,7 @@ public class AdventOfCode2024Lib
     #endregion
     
     #region Day04
-
+    
     public static long Day04_1(string input)
     {
         var lines = SplitLines(input);
@@ -198,54 +198,246 @@ public class AdventOfCode2024Lib
         {
             for (var y = 0; y < height; y++)
             {
-                var add = 0;
                 if (lines[y][x] == 'X')
                 {
-                    var horizontalRight = lines[y][SaveCalc(x + 1, width)] == 'M'
-                                       && lines[y][SaveCalc(x + 2, width)] == 'A'
-                                       && lines[y][SaveCalc(x + 3, width)] == 'S' ? 1 : 0;
-                    var horizontalLeft =  lines[y][SaveCalc(x - 1, width)] == 'M' 
-                                       && lines[y][SaveCalc(x - 2, width)] == 'A'
-                                       && lines[y][SaveCalc(x - 3, width)] == 'S' ? 1 : 0;
-                    var verticalDown =  lines[SaveCalc(y + 1, height)][x] == 'M'
-                                     && lines[SaveCalc(y + 2, height)][x] == 'A'
-                                     && lines[SaveCalc(y + 3, height)][x] == 'S' ? 1 : 0;
-                    var verticalUp =    lines[SaveCalc(y - 1, height)][x] == 'M'
-                                     && lines[SaveCalc(y - 2, height)][x] == 'A'
-                                     && lines[SaveCalc(y - 3, height)][x] == 'S' ? 1 : 0;
-                    var diagDownRight = lines[SaveCalc(y + 1, height)][SaveCalc(x + 1, width)] == 'M'
-                                     && lines[SaveCalc(y + 2, height)][SaveCalc(x + 2, width)] == 'A'
-                                     && lines[SaveCalc(y + 3, height)][SaveCalc(x + 3, width)] == 'S' ? 1 : 0;
-                    var diagDownLeft =  lines[SaveCalc(y + 1, height)][SaveCalc(x - 1, width)] == 'M'
-                                     && lines[SaveCalc(y + 2, height)][SaveCalc(x - 2, width)] == 'A'
-                                     && lines[SaveCalc(y + 3, height)][SaveCalc(x - 3, width)] == 'S' ? 1 : 0;
-                    var diagUpRight =   lines[SaveCalc(y - 1, height)][SaveCalc(x + 1, width)] == 'M'
-                                     && lines[SaveCalc(y - 2, height)][SaveCalc(x + 2, width)] == 'A'
-                                     && lines[SaveCalc(y - 3, height)][SaveCalc(x + 3, width)] == 'S' ? 1 : 0;
-                    var diagUpLeft =    lines[SaveCalc(y - 1, height)][SaveCalc(x - 1, width)] == 'M'
-                                     && lines[SaveCalc(y - 2, height)][SaveCalc(x - 2, width)] == 'A'
-                                     && lines[SaveCalc(y - 3, height)][SaveCalc(x - 3, width)] == 'S' ? 1 : 0;
-                    add = horizontalRight + horizontalLeft 
-                         + verticalDown + verticalUp 
-                         + diagDownRight + diagDownLeft 
-                         + diagUpRight + diagUpLeft;
+                    (int,int)[] horizRight = [(y, SaveCalc(x, + 1, width)), 
+                                              (y, SaveCalc(x, + 2, width)), 
+                                              (y, SaveCalc(x, + 3, width)),(y,x)];
+                    sum += CheckXmas(lines, existMap, horizRight);
+                    (int,int)[] horizLeft = [(y, SaveCalc(x, - 1, width)), 
+                                             (y, SaveCalc(x, - 2, width)), 
+                                             (y, SaveCalc(x, - 3, width)),(y,x)];
+                    sum += CheckXmas(lines, existMap, horizLeft);
+                    
+                    (int,int)[] verticalDown = [(SaveCalc(y, + 1, height), x), 
+                                                (SaveCalc(y, + 2, height), x), 
+                                                (SaveCalc(y, + 3, height), x),(y,x)];
+                    sum += CheckXmas(lines, existMap, verticalDown);
+                    (int,int)[] verticalUp = [(SaveCalc(y, - 1, height), x), 
+                                              (SaveCalc(y, - 2, height), x), 
+                                              (SaveCalc(y, - 3, height), x),(y,x)];
+                    sum += CheckXmas(lines, existMap, verticalUp);
+                    
+                    (int,int)[] diagDownRight = [(SaveCalc(y, + 1, height), SaveCalc(x, + 1, width)), 
+                                                 (SaveCalc(y, + 2, height), SaveCalc(x, + 2, width)), 
+                                                 (SaveCalc(y, + 3, height), SaveCalc(x, + 3, width)),(y,x)];
+                    sum += CheckXmas(lines, existMap, diagDownRight);
+                    (int,int)[] diagDownLeft = [(SaveCalc(y, + 1, height), SaveCalc(x, - 1, width)), 
+                                                (SaveCalc(y, + 2, height), SaveCalc(x, - 2, width)), 
+                                                (SaveCalc(y, + 3, height), SaveCalc(x, - 3, width)),(y,x)];
+                    sum += CheckXmas(lines, existMap, diagDownLeft);
+
+                    (int,int)[] diagUpRight = [(SaveCalc(y, - 1, height), SaveCalc(x, + 1, width)), 
+                                               (SaveCalc(y, - 2, height), SaveCalc(x, + 2, width)), 
+                                               (SaveCalc(y, - 3, height), SaveCalc(x, + 3, width)),(y,x)];
+                    sum += CheckXmas(lines, existMap, diagUpRight);
+                    (int,int)[] diagUpLeft = [(SaveCalc(y, - 1, height), SaveCalc(x, - 1, width)), 
+                                              (SaveCalc(y, - 2, height), SaveCalc(x, - 2, width)), 
+                                              (SaveCalc(y, - 3, height), SaveCalc(x, - 3, width)),(y,x)];
+                    sum += CheckXmas(lines, existMap, diagUpLeft);
                 }
-                
-                if (add > 0)
+            }
+        }
+
+        // PrintResultMap(existMap, lines, width, height);
+
+        return sum;
+    }
+    
+    private static int CheckXmas(string[] lines, int[,] existMap, (int y, int x)[] coords)
+    {
+        if (coords.Any(c => c.x == -1 || c.y == -1)) return 0;
+        
+        var result =   lines[coords[0].y][coords[0].x] == 'M' 
+                       && lines[coords[1].y][coords[1].x] == 'A'
+                       && lines[coords[2].y][coords[2].x] == 'S'
+            ? 1 : 0;
+        existMap[coords[0].y, coords[0].x] += result;
+        existMap[coords[1].y, coords[1].x] += result;
+        existMap[coords[2].y, coords[2].x] += result;
+        existMap[coords[3].y, coords[3].x] += result;
+        return result;
+    }
+
+    public static long Day04_2(string input)
+    {
+        var lines = SplitLines(input);
+        var width = lines[0].Length;
+        var height = lines.Length;
+        var sum = 0;
+        var existMap = new int[height,width];
+
+        for (var x = 0; x < width; x++)
+        {
+            for (var y = 0; y < height; y++)
+            {
+                if (lines[y][x] == 'A')
                 {
-                    sum += add;
-                }            
+                    (int,int)[] horizRight = 
+                        [(SaveCalc(y, + 1, height), SaveCalc(x, - 1, width)), 
+                         (SaveCalc(y, - 1, height), SaveCalc(x, + 1, width)),
+                         (SaveCalc(y, - 1, height), SaveCalc(x, - 1, width)), 
+                         (SaveCalc(y, + 1, height), SaveCalc(x, + 1, width)),
+                         (y,x)];
+                    sum += CheckX_Mas(lines, existMap, horizRight);
+                }
+            }
+        }
+
+        // PrintResultMap(existMap, lines, width, height);
+
+        return sum;
+    }
+
+    private static void PrintResultMap(int[,] existMap, string[] lines, int width, int height)
+    {
+        for (var y = 0; y < height; y++)
+        {
+            for (var x = 0; x < width; x++)
+            {
+                Console.Write(existMap[y, x] > 0 ? lines[y][x] : '.');
+            }
+            Console.WriteLine();
+        }
+    }
+
+    private static int CheckX_Mas(string[] lines, int[,] existMap, (int y, int x)[] coords)
+    {
+        if (coords.Any(c => c.x == -1 || c.y == -1)) return 0;
+        
+        var result =   (lines[coords[0].y][coords[0].x] == 'M' && lines[coords[1].y][coords[1].x] == 'S'
+                       ||lines[coords[0].y][coords[0].x] == 'S' && lines[coords[1].y][coords[1].x] == 'M')
+                       && (lines[coords[2].y][coords[2].x] == 'M' && lines[coords[3].y][coords[3].x] == 'S'
+                       || lines[coords[2].y][coords[2].x] == 'S' && lines[coords[3].y][coords[3].x] == 'M')
+            ? 1 : 0;
+        existMap[coords[0].y, coords[0].x] += result;
+        existMap[coords[1].y, coords[1].x] += result;
+        existMap[coords[2].y, coords[2].x] += result;
+        existMap[coords[3].y, coords[3].x] += result;
+        existMap[coords[4].y, coords[4].x] += result;
+        return result;
+    }
+    
+    public static int SaveCalc(int value, int add, int max)
+    {
+        var result = value + add;
+        if (result < 0 || result >= max) return -1;
+        return result;
+    }
+    
+    #endregion
+    
+    #region Day05
+
+    public static int Day05_1(string input)
+    {
+        var lines = SplitLines(input);
+        var sum = 0;
+        
+        var rules = lines.Where(l => l.Contains('|'))
+            .Select(l => l.Split('|').Select(int.Parse).ToArray())
+            .Select(x => (first:x[0],second:x[1])).ToList();
+        var updates = lines.Where(l => l.Contains(','))
+            .Select(l => l.Split(',').Select(int.Parse).ToArray()).ToList();
+
+        foreach (var update in updates)
+        {
+            var matchingRules = rules.Where(x => update.Contains(x.first) && update.Contains(x.second)).ToList();
+            var valid = true;
+            for(var idx = 0; idx < update.Length && valid; idx++)
+            {
+                var page = update[idx];
+                if (idx < update.Length - 1)
+                {
+                    var followingPages = update.Skip(idx + 1);
+                    foreach (var followPage in followingPages)
+                    {
+                        valid = matchingRules.Any(x => x.first == page && x.second == followPage);
+                        if (!valid) break;
+                    }
+                    if (!valid) break;
+                }
+
+                if (idx > 0)
+                {
+                    var precedingPages = update.Take(idx - 1);
+                    foreach (var precedingPage in precedingPages)
+                    {
+                        valid = matchingRules.Any(x => x.first == precedingPage && x.second == page);
+                        if (!valid) break;
+                    }
+                    if (!valid) break;
+                }
+            }
+
+            if (valid)
+            {
+                var middleIdx = update.Length / 2;
+                var value = update[middleIdx];
+                sum += value;
+                //Console.WriteLine($"{(string.Join(",", update.Select(x=>x.ToString())))} -> {value}");
             }
         }
 
         return sum;
     }
-
-    public static int SaveCalc(int value, int max)
+    
+    public static int Day05_2(string input)
     {
-        if (value < 0) return max + value;
-        if (value >= max) return value - max;
-        return value;
+        var lines = SplitLines(input);
+        var sum = 0;
+        
+        var rules = lines.Where(l => l.Contains('|'))
+            .Select(l => l.Split('|').Select(int.Parse).ToArray())
+            .Select(x => (first:x[0],second:x[1])).ToList();
+        var updates = lines.Where(l => l.Contains(','))
+            .Select(l => l.Split(',').Select(int.Parse).ToArray()).ToList();
+
+        foreach (var update in updates)
+        {
+            var matchingRules = rules.Where(x => update.Contains(x.first) && update.Contains(x.second)).ToList();
+            var valid = true;
+            for(var idx = 0; idx < update.Length && valid; idx++)
+            {
+                var page = update[idx];
+                if (idx < update.Length - 1)
+                {
+                    var followingPages = update.Skip(idx + 1);
+                    foreach (var followPage in followingPages)
+                    {
+                        valid = matchingRules.Any(x => x.first == page && x.second == followPage);
+                        if (!valid) break;
+                    }
+                    if (!valid) break;
+                }
+
+                if (idx > 0)
+                {
+                    var precedingPages = update.Take(idx - 1);
+                    foreach (var precedingPage in precedingPages)
+                    {
+                        valid = matchingRules.Any(x => x.first == precedingPage && x.second == page);
+                        if (!valid) break;
+                    }
+                    if (!valid) break;
+                }
+            }
+
+            if (!valid)
+            {
+                var result = new List<int>();
+                var orderedRules = matchingRules.GroupBy(x => x.first).OrderByDescending(x => x.Count()).ToList();
+                result.AddRange(orderedRules.Select(x => x.First().first));
+                result.Add(matchingRules.GroupBy(x => x.second).OrderByDescending(x => x.Count()).Select(x => x.First().second).First());
+                
+                var middleIdx = result.Count / 2;
+                var value = result[middleIdx];
+                sum += value;
+                //Console.WriteLine($"{(string.Join(",", result.Select(x=>x.ToString())))} -> {value}");
+            }
+        }
+
+        return sum;
     }
     
     #endregion
