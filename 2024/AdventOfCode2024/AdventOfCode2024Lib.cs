@@ -522,6 +522,120 @@ public class AdventOfCode2024Lib
 
     private static bool IsOnMap(int x, int y, int width, int height)
         => x >= 0 && x < width && y >= 0 && y < height;
+    
+    // four possible moves to iterate
+    private static readonly (int x,int y)[] Day06Directions = new[]
+    {
+        (0,0),
+        (x: 0, y: -1), 
+        (x: 1, y: 0),
+        (x: 0, y: 1),
+        (x: -1, y: 0)
+    };
+    
+    public static int Day06_2(string input)
+    {
+        var lines = SplitLines(input);
+        var width = lines.First().Length;
+        var height = lines.Length;
+        var x = 0;
+        var y = 0;
+        var obstacles = 0;
+        // find beginning position
+        for (var idx = 0; idx < lines.Length; idx++)
+        {
+            x = lines[idx].IndexOf('^');
+            if (x != -1)
+            {
+                y = idx;
+                break;
+            }
+        }
+
+        var direction = 1;
+
+        // log where we have been as we need the number of distinct visited positions
+        var pathLog = new char[width, height];
+        var directionLog = new int[width, height];
+        // we are already visiting one position
+        pathLog[x, y] = 'x';
+        directionLog[x, y] = direction;
+
+        var isOnMap = true;
+        while (isOnMap)
+        {
+            var nextX = x + Day06Directions[direction].x;
+            var nextY = y + Day06Directions[direction].y;
+            isOnMap = IsOnMap(nextX, nextY, width, height);
+            if (isOnMap)
+            {
+                    
+                if (lines[nextY][nextX] == '#')
+                {
+                    pathLog[nextX, nextY] = '#';
+                    direction = NextDirection(direction);
+                    directionLog[x, y] = direction;
+                }
+                else
+                {
+                    // check if we get to a loop if we turn here at the current position (x,y)
+                    var alteredDirection = NextDirection(direction);
+                    var alteredX = x + Day06Directions[alteredDirection].x;
+                    var alteredY = y + Day06Directions[alteredDirection].y;
+                    while (IsOnMap(alteredX, alteredY, width, height))
+                    {
+                        var anotherX = alteredX + Day06Directions[alteredDirection].x;
+                        var anotherY = alteredY + Day06Directions[alteredDirection].y;
+                        
+                        if (directionLog[alteredX, alteredY] == alteredDirection
+                            || IsOnMap(anotherX, anotherY, width, height)
+                            && lines[anotherY][anotherX] == '#' 
+                            && directionLog[alteredX, alteredY] == NextDirection(alteredDirection)
+                            )
+                        {
+                            obstacles++;
+                            pathLog[nextX, nextY] = '0';
+                            break;
+                        }
+                        
+                        alteredX += Day06Directions[alteredDirection].x;
+                        alteredY += Day06Directions[alteredDirection].y;
+                    }
+                    
+                    x = nextX;
+                    y = nextY;
+                    if (pathLog[x, y] == 0)
+                    {
+                        pathLog[x, y] = 'x';
+                    }
+
+                    directionLog[x, y] = direction;
+                }
+            }
+        }
+
+        for (y = 0; y < height; y++)
+        {
+            for (x = 0; x < width; x++)
+            {
+                Console.Write(pathLog[x, y] > 0 ? pathLog[x, y] : '.');
+            }
+            Console.WriteLine();
+        }
+
+        return obstacles;
+    }
+
+    private static int NextDirection(int direction)
+    {
+        direction++;
+        if (direction == Day06Directions.Length)
+        {
+            direction = 1;
+        }
+
+        return direction;
+    }
 
     #endregion
 }

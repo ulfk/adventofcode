@@ -4936,5 +4936,20 @@ SASMMMASMMMSSSMSSXMSAMXSMMXMXMAMSSMMSXMSXMMSMMMSSMSMSMSXSXSSMMSMSSSXMASMMXSXSSXM
         result.Should().Be(4663);
     }
 
+    [TestMethod]
+    public void Day06_2_Dummy()
+    {
+        var result = AdventOfCode2024Lib.Day06_2(Day06_Dummy);
+        result.Should().Be(6);
+    }
+    
+        
+    [TestMethod]
+    public void Day06_2_Final()
+    {
+        var result = AdventOfCode2024Lib.Day06_2(Day06_Final);
+        result.Should().Be(0); // 1489 is too low
+    }
+    
     #endregion
 }
