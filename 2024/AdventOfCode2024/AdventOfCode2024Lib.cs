@@ -5,7 +5,7 @@ namespace AdventOfCode2024;
 /// <summary>
 /// https://adventofcode.com/2024
 /// </summary>
-public class AdventOfCode2024Lib
+public static class AdventOfCode2024Lib
 {
     private static string[] SplitLines(string lines)
     {
@@ -64,7 +64,7 @@ public class AdventOfCode2024Lib
                 var sign = Math.Sign(diff);
                 var absDiff = Math.Abs(diff);
                 if (prevSign == undefinedSign) prevSign = sign;
-                valid = sign == prevSign && absDiff > 0 && absDiff <= 3;
+                valid = sign == prevSign && absDiff is > 0 and <= 3;
             }
 
             if (valid) sum++;
@@ -94,7 +94,7 @@ public class AdventOfCode2024Lib
     }
     
     private static bool IsValidDiff(int sign, int prevSign, int absDiff) 
-        => sign == prevSign && absDiff > 0 && absDiff <= 3;
+        => sign == prevSign && absDiff is > 0 and <= 3;
 
     private static bool IsLineValid(int[] values, bool skippedOne = false)
     {
@@ -239,7 +239,7 @@ public class AdventOfCode2024Lib
             }
         }
 
-        // PrintResultMap(existMap, lines, width, height);
+        PrintResultMap(existMap, lines, width, height);
 
         return sum;
     }
@@ -284,7 +284,7 @@ public class AdventOfCode2024Lib
             }
         }
 
-        // PrintResultMap(existMap, lines, width, height);
+        PrintResultMap(existMap, lines, width, height);
 
         return sum;
     }
@@ -318,7 +318,7 @@ public class AdventOfCode2024Lib
         return result;
     }
     
-    public static int SaveCalc(int value, int add, int max)
+    private static int SaveCalc(int value, int add, int max)
     {
         var result = value + add;
         if (result < 0 || result >= max) return -1;
@@ -524,14 +524,14 @@ public class AdventOfCode2024Lib
         => x >= 0 && x < width && y >= 0 && y < height;
     
     // four possible moves to iterate
-    private static readonly (int x,int y)[] Day06Directions = new[]
-    {
+    private static readonly (int x,int y)[] Day06Directions =
+    [
         (0,0),
-        (x: 0, y: -1), 
-        (x: 1, y: 0),
-        (x: 0, y: 1),
-        (x: -1, y: 0)
-    };
+        (0, -1), 
+        (1, 0),
+        (0, 1),
+        (-1, 0)
+    ];
     
     public static int Day06_2(string input)
     {

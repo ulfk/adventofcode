@@ -6,9 +6,11 @@ namespace AdventOfCode2024Tests;
 [TestClass]
 public class AdventOfCode2024Tests
 {
+    // ReSharper disable InconsistentNaming
+    
     #region Day01
     
-    private List<int> Day01_Final_First =
+    private readonly List<int> Day01_Final_First =
     [
         58692,
         45806,
@@ -1011,7 +1013,7 @@ public class AdventOfCode2024Tests
         25998,
         37079
     ];
-    private List<int> Day01_Final_Second =
+    private readonly List<int> Day01_Final_Second =
     [
         56129,
         95015,
@@ -2015,7 +2017,7 @@ public class AdventOfCode2024Tests
         53944
     ];
 
-    private List<int> Day01_Dummy_First =
+    private readonly List<int> Day01_Dummy_First =
     [
         3,
         4,
@@ -2024,7 +2026,7 @@ public class AdventOfCode2024Tests
         3,
         3
     ];
-    private List<int> Day01_Dummy_Second =
+    private readonly List<int> Day01_Dummy_Second =
     [
         4,
         3,
@@ -2067,14 +2069,14 @@ public class AdventOfCode2024Tests
     
     #region Day02
 
-    private string Day02_Dummy = @"7 6 4 2 1
+    private const string Day02_Dummy = @"7 6 4 2 1
 1 2 7 8 9
 9 7 6 2 1
 1 3 2 4 5
 8 6 4 4 1
 1 3 6 7 9";
 
-    private string Day02_Final = @"10 11 13 16 15
+    private const string Day02_Final = @"10 11 13 16 15
 3 6 9 10 11 12 12
 43 46 49 52 54 58
 59 60 61 63 65 68 75
@@ -3074,7 +3076,7 @@ public class AdventOfCode2024Tests
 64 65 68 71 73 74
 58 60 63 64 67
 33 35 36 37 39 41";
-    
+
     [TestMethod]
     public void Day02_1_Dummy()
     {
@@ -3107,9 +3109,9 @@ public class AdventOfCode2024Tests
     
     #region Day03
 
-    private string Day03_Dummy = @"xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))";
+    private const string Day03_Dummy = @"xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))";
 
-    private string Day03_Final =
+    private const string Day03_Final =
         @"}@/]({why()why()mul(857,200)}&)){!from()-mul(158,758):who():!who()what()@>%mul(953,214)from()why()when()$'[+mul(277,918)select()[~$)mul(708,736)^~from()/why()^#mul(588,753)who()]$where()mul(562,499)->')!don't()mul(677,889)#]##?,-?don't()&$when()$mul(554,958)how()?how() ~)(;don't()>+~when(){~what()+}'mul(446,878)/:&]how()!mul(207,471)}what()~-+/mul(398,851)where()how()@where()}-]how()mul(847,472)mul(244,19){-#:$mul(895,91)(!:mul(872,18)+}why(251,250)mul(630,73)%:,!who(981,677)!!mul(103,541)why(),how() )%:mul(749,545)what()^mul(22,489)mul(699,518)-~,where()[where()~mul(291,9)select()-when()]do()!<<select();who()}%mul(830,471):?@-how()when(){$how()(mul(528,980)from()what() [?&$mul(930,234)where()}mul(992,63)>,[what()!//+why()/mul(38,546):mul(297,2)why()<who()[what()$)#!don't()^#:?mul(458,249)<%^*)];&mul(816,429)* ;what()select()when()mul(15,824):#mul(669,34)from()$mul(363,251)$select(757,257)*@^?@~what()#mul(551,812)!>mul(745,860) mul(110,274)mul(30,694)'%#^)why()mul(491,133))]where(835,197)[/mul(212,917)+^*^{when(421,261)-where()<)mul(448,147)where()]mul(448,494);)!what()%~#?#~do()/?/@[why()//select()mul(992,463)/mul(447,526){-mul(907,965):!who()#how()mul(95,36)where()where()#;~+~mul(898,41)- !^-*#where()mul(63,801):^@from()^mul(742,163)where()*'mul(979,736)when(627,44)!who()mul(92,637)!~/%]>~^mul(723,185)select()~%]);^when(384,799)mul(597,721),%'* !mul(915,963)*;don't()select()how())~:,how()mul(498,757)'/mul(361,423)///where(){what()^who()$why()mul(700,270)[~what():from()mul(442,15)?)+mul(134,759)who()-@}select()when()'&who()<mul(197,114)+'@@:#;:+mul(456,291)when();[mul(810,734)&;select()mul(779,730)@mul(48,436)who()},],mul(856,377)how()@]mul(231,214)mul(289,948))how()from()where()/}why()select()mul(413,445)from()[who()@]mul(547,89)~'[(!who()@}mul(433,361)-how()?>who()?what(697,478)?-what(516,904)mul(435,284)@!> ^<mul(798,836)<(mul(701,253)}'#%}mul(896,763)mul(607,689)'where()'}^mul**when()why()<(what()why(127,499)%mul(124,832)%why()where()^] mul(815,705)@who()]mul(362,182)};mul,!mul(551,219)where()?)&(:[)mul(958,936)when()&$>what(){mul(118,686)&mul(478,122)when(586,470)$>mul(835,231){]@[do()~$$]%~;-mul(236,742){&,mul(512,497)[where()()where()mul(295,913)[mul(959,932)~+@mul(868,214)'>}'mul(549,147),'/<,mul(121,328)(how()-mul(262,843)what() ;&when()]mul(886,378)? {what()who()*mul(194,970)when()from()$who()mul(79>%don't()*~ :select()&mul(340,662) -<@;where()++)what()mul(367,860)}:/;why()/,-mul(973,473)what()-{)mul(775,358);what():@select()do())(from()]@<what(216,350)why()who()@mul(296(when(),&mul(441,314),++{:*who()mul(458,712)?]'$select()why()[@mul(228,934)select(){#%mul(800,434)mul(32,355)mul(895,206)$':from()!mul(238,945),}[?}$why()<mul(904,931)*$mul(948,562)where()]why(601,835):!!*}select(280,167)mul(541,249)who()<-~who()mul(323,779)>(%@when(764,373)mul(60,926)mul(998,76)[how()*/do()@who()*from()<+]^select()&mul(2,30)
 )who()select();mul(121,859)from()@},who():mul(606,797)from();what()what()*&,)*mul(478,201):/<;&from()}select(509,683)^mul(442,760) ],how()@ where()mul(325,315)mul(377,534)+when(953,408)how()/who()$@select()select(82,159)where()mul(590,633)how()>'why(136,599)&$~why()mul(44,530)*$mul'$what()+mul(634,476)[>{~-do()$mul(689,54)from()~+#%{,+!what()mul(360@[>/how()from()#,;mul(794,106)why()why()mul(822,201)}{)~?how()mul(440,483)where()who(356,874)+how(274,674);mul(114,558))how(),]})]}</mul(397,596),~<![#,:(do()%who()mul(969,996)~{/@how()],select()@mul(666,207),mul(692,414who();^)what()</ ]]mul(447,106)who()]>}^)&+:%mul(85,419)mulfrom(),why()))#[<?mul(162,336)!;[[->^how()#mul(711}*&:do()mul(832,303)what(720,682)}]^mul(848,34)#{)!,where()why()select()/mul(297,312);*(: <why(67,348)) }mul(167,517)) &+$where()&(*do()~#who()?&#});when(93,740)mul(516,233^: {#?&mul(549,677)&%:mul(506,998)where()~[/when()-<:,?mul(622,56),mul(710,886^mul(629,502)why()${;],{mul(7,729)why():#'>why();&[select()mul(835,973) >mul(976,433)where();'}?]@select()mul(613,866)-how()#mul(121,104)!-mul(25,379) ]*why(){~+mul@^~where()*[who()(/@mul(256,212)~what()mul(855,364) !?;mul>:/from(945,813)/mul(996,850)!&(mul(369,875)%<mul(891,144);from()%]<'<mul(631,980)[#~%why(),~mul(705,849)how()%+?;>mul(917,57)-select();mul(868,942)]?~{[mul(352,436)!~how()-@mul(629,784),%<}~&mul(648,951)from(153,561))&$why(917,532)mul(640,970)why():[ ?%mul^mul(428,879))what()mul(199,603))mul(845,646)!$:!,?[select()mul(792,917]when(),[*<mul(422,243)}select()who()>&+:,>mul(283,734);mul(799,547)<^from()@mul(113,216)@{^ mul@mul(679,251)[*mul(899,455)why() select()/[%mul(4,45)(*^what()^:select(923,55)-#<mul(701,340)who()<don't()!^)-@[mul>mul(191,622)when()'?mul(784,659)/where()$:where(46,726)why()/!];mul(96,630)mul(601,327)%;,mul(336%where()^#>;why():/mul(754,451)select()how(491,36){%!}]mul(868,7)$select()! $where()select()&$mul(814,614)mul(535,117)%:#;{]!{(mul(537,533)-!%>#mul(794,183)mul(135,122)!(>,)do()~'who()from(504,62);what(){mul(959,794)!}-(mul(890,934)>'what()from()mul(412,476)^~mul(852how()mul(277,740)!!<#%^]$where()mul(694,253)#~>@{mul(570@]}!&@$%select()'mul(492,943)where()/mul(893,661)}mul(343,224)from(178,398)!#what()+&^^who(){mul(197,133)from()mul(334,570)mul(374,818),&^ $[don't()mul(781,459)why()from(959,545)-;[@mul(147,509)select()!}when()mul(778,892)what()#mul(960,67)<[from(),select()!?how()mul(376,145)-!; (+from()> ^mul(780,339):,$what()+mul(491,818)+>*^>@how()[what(879,204)how()mul(70!'@$#,how()>mul(492,341)/from()?&<+?select()[how(707,662)mul(40,129)]where()select(501,969)-}+mul(651,382)mul(582,658)&>%<from()(>#who()mul(27,768)!how()when()who()why()mul(860,651)%^[from()*where())(mul(2,858)select()}#];$mul(654,738)mul(538,332)[{(@mul(270,261)]/~mul(756,771)/mul(311,298)how();]~>;{<mul(663,677)+>?mul(260,313)<}~;from()}why()!}mul(902,613)mul(458,68)@:how()when()@)[^from()>mul(651,358) when()?]select():%)~*mul(769,230)*%%how()<]from()do()?who() :!,mul(256,752)#select():who()what(){;+<&mul(429,732)[^~where()what(425,533),[',$mul(546,869)how() <mul(424,645)why()'(((mul(233,853)
 ,:?[:}how():*mul(356,31)$~>what()do()who()!-#] +mul}}[#who()from()&-+*mul(613,565)#&-)<select()-mul(653,985)!#;mul(432,634),what()$/$[<don't()mul(203*${?]:>?mul(49,724)mul(250,187)mul(389,591)+from()*why()%:why()where()when()(mul(732,636)%~what()mul(170,116)+-}/%what()'mul(765,501)[^]?how()#mul(186,825))-}why()mul(302,601){]#where()*;from()mul(862,742)why()select()<where()where()mul(666,401)who()~who()[]+where()%^mul(874,116'mul(439,908)where()()where()when()!+mul(560,829),mul(286,115)}mul(273,259)+[#@*}mul(832,167)#<<(where()why()>!who()mul(51,136)$how()select()mul(116,301)mul*&(from()~> mul(456,87)?${%#mul(796,323),]>why()mul(622,227)']{~<how()mul(518,891)where()what()^]select()~'who(140,499)mul(616,446)mul(849,298)<+!+~]^where()mul(777,50)}%''<]+mulfrom(527,421)~mul(880,854)$+>'+where(){#-mul(37,539)?<)]why():[>mul(369,873) who()%from(342,759)&don't()}why()?mul(472,266)when()mul(413,298)when()[]$!@mul(739,890)+$'*who()mul(215,821)how()}%what()how()^mul(837,240)+}mul(882,381),;select()'~>[]}{mul(772,663)[^%,])who(){mul(398,367);}how() ,-who()-{who()mul(964,744)(mul(90,658)]<{[when()^@mul(216,425)}?[!mul(374,641);how(){]#^~where()from()mul(909,90)>:@{mul(491,477)<what()mul(338,691)(*why()-)?[mul(844,138)&+)mul(3$) mul(892,565)mul(913,244)**where()<who()/-&@*do()]&&&what()({![mul(239[why()]mul(643,590)/*-(mul(79,823)where(),%?~-~where()select(255,453)where()mul(634,892)-{ &how()[ <mul(50,27)+^:when()]+,*mul(706,164)#,~from(),>@$mul(932,629){][#+mul(993,863)]mul(405,521),+why(25,778)mul)@why(986,941)who()] >how())mul(163,617):-don't()when()? mul(144,275)>-when()/'~don't(){mul(111,133)],where(): }mul(351,780)select()why()mul(325,938)} where()#/'where()[what(){mul(936,880)select()%]$?^)@>mul(806?:what(){what()$who(992,398)@how()}mul(507,635);,when()/what(83,275)}?*;mul(905,828)+where()how()!mul(59,265)$>: ]},:-!do()when()where() why()<'*^mul(262,857/~@'{!what()$/select()'mul(669,373)mul(990,115)*select();{(mul(364,943)>> &{when()mul(338,512)>( #:mul(761,640)what()select()don't(),^select();why()'><when()]mul(942,498)what()$)why()mul(342,38)!?<@mul(959,310)**@mul(919,890)@!select()where()from()[where()what()+mulwhy()what(),>+-($?what()@mul(774,119)-how()!select()mul(578,919)when()>>-mul(744,442) -)^why()-mul(194,582)mul(112,346)+!from()mul(75,217)what()<don't()(<%why()mul(738$'^] '?*'&^mul(485,611)+who()&!-mul(970,390)who()select()@how()}!mul(748,964)'why()[how()select(),select()&who(),mul(731,138)}^&]>how()*@,mul(781,19)!]how()<?;<;mul(573,28);%$% ^%}mul(698,965)mul(440,100)<,<why()]:select()>}mul(840#~%+~~)mul(564,143)[% /<~}/mul(575,875)mul(386,110)*#{mul(913,496);why()-}mul(608,777)?@+>mul(264,527);;**mul(906,263)(':don't()mul(452,213)@when())when():(who()$!why()do()$}(!%[from() -mul(198,318)::)<<,&mul}[%#mul(919,501)/~#~mul(332,157)~<[select()mul(619,931),how():%where();how()mul(633,846) from()>}how(),%mul(456,751)when(), mul(896,30)~{how()]where()from()(why()+don't()![#!from()(-~mul(679,191)@+<select(),!who()mul(441,683)!mul(481,982)<how()/who()'what():mul(39,637)?what()select())mul(124,424)*@)]$' mulhow()~[{{'#!/usr/bin/perl!]where()mul(897,698)
@@ -3153,7 +3155,7 @@ from()-^#*<)mul(704,198)*>what()>}{mul(992,257)*select() mul(613,810)why()?@*sel
     
     #region Day04
 
-    private string Day04_Dummy = @"MMMSXXMASM
+    private const string Day04_Dummy = @"MMMSXXMASM
 MSAMXMSMSA
 AMXSXMAAMM
 MSAMASMSMX
@@ -3164,7 +3166,7 @@ SAXAMASAAA
 MAMMMXMMMM
 MXMXAXMASX";
 
-    private string Day04_Final = @"SSSMMAASASAMXSSMSMMSSSSSSMSSMMMSMSAXMAMASXXXXMXMXSXXXMAMMSSSSSSXXAMXMSSXMAXMMXMMSSSMSAMXMXSXMSMSSSXMMSAMMSAMXMSMMMXSASMMMXMXMMXXAMXXMASXMXMS
+    private const string Day04_Final = @"SSSMMAASASAMXSSMSMMSSSSSSMSSMMMSMSAXMAMASXXXXMXMXSXXXMAMMSSSSSSXXAMXMSSXMAXMMXMMSSSMSAMXMXSXMSMSSSXMMSAMMSAMXMSMMMXSASMMMXMXMMXXAMXXMASXMXMS
 AMAASMMSASASAAMMAAXXAAXAAAAXASAAXSAMXSXASMSMAMSMASMSMXAXSAMXAAAMSXXAMXAAMXSAMAAXSAAAMAMAMASMMAASAXSAASAMXAAXAXAMAXXXAXAASMMASMASXMSXSAMAMMMS
 MSSMMAAXASAMXMMSSSMMMMMMMMMXAMMMMSAMAMMXMAMSAMAMXSAAASMMMASMMMMMAASXSMSAMXAASXSMMMMMSAMMMASASMSMAMMMMSAXMSMSMSMSMSMMMMSMXAXASXAAAMAMMASAMAAM
 XXAMXMMMMMMMMXXAAAXMSAMXSXMASXSXXSAMXSSXMAMXMSMXAMMMXAMXSAMAMAXMMXMXAMXAAMMXMAAMXAAXXXSXMASMMMMMXMMMASAMXXXXXAXAMAMAAAMMSSMASMSSSMASXXMXSMSX
@@ -3337,7 +3339,7 @@ SASMMMASMMMSSSMSSXMSAMXSMMXMXMAMSSMMSXMSXMMSMMMSSMSMSMSXSXSSMMSMSSSXMASMMXSXSSXM
     
     #region Day05
 
-    private string Day05_Dummy = @"47|53
+    private const string Day05_Dummy = @"47|53
 97|13
 97|61
 97|47
@@ -3366,7 +3368,7 @@ SASMMMASMMMSSSMSSXMSAMXSMMXMXMAMSSMMSXMSXMMSMMMSSMSMSMSXSXSSMMSMSSSXMASMMXSXSSXM
 61,13,29
 97,13,75,29,47";
 
-    private string Day05_Final = @"32|62
+    private const string Day05_Final = @"32|62
 69|17
 69|83
 71|68
@@ -4780,7 +4782,7 @@ SASMMMASMMMSSSMSSXMSAMXSMMXMXMAMSSMMSXMSXMMSMMMSSMSMSMSXSXSSMMSMSSSXMASMMXSXSSXM
     
     #region Day06
 
-    private string Day06_Dummy = @"....#.....
+    private const string Day06_Dummy = @"....#.....
 .........#
 ..........
 ..#.......
@@ -4791,7 +4793,7 @@ SASMMMASMMMSSSMSSXMSAMXSMMXMXMAMSSMMSXMSXMMSMMMSSMSMSMSXSXSSMMSMSSSXMASMMXSXSSXM
 #.........
 ......#...";
 
-    private string Day06_Final = @"#.............#.#...........................................................#..........#...........................#..........#...
+    private const string Day06_Final = @"#.............#.#...........................................................#..........#...........................#..........#...
 ............#......................#.......#..#.........#...................##....................................................
 ..............#...........#..#.......#.........#.#...........................#................................#......#............
 .....#......................................#......#..#...................#....................#......................#...........
