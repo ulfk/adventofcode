@@ -561,6 +561,7 @@ public static class AdventOfCode2024Lib
         pathLog[x, y] = 'x';
         directionLog[x, y] = direction;
 
+        var steps = 0;
         var isOnMap = true;
         while (isOnMap)
         {
@@ -569,39 +570,54 @@ public static class AdventOfCode2024Lib
             isOnMap = IsOnMap(nextX, nextY, width, height);
             if (isOnMap)
             {
-                    
+                // Console.WriteLine($"{x}, {y}, {direction}");
                 if (lines[nextY][nextX] == '#')
                 {
-                    pathLog[nextX, nextY] = '#';
                     direction = NextDirection(direction);
                     directionLog[x, y] = direction;
+                    pathLog[nextX, nextY] = '#';
                 }
                 else
                 {
+                    // https://www.reddit.com/r/adventofcode/comments/1h7y9ws/2024_day_6_part_2_finally_found_the_issue_in_my/
                     // check if we get to a loop if we turn here at the current position (x,y)
                     var alteredDirection = NextDirection(direction);
-                    var alteredX = x + Day06Directions[alteredDirection].x;
-                    var alteredY = y + Day06Directions[alteredDirection].y;
-                    while (IsOnMap(alteredX, alteredY, width, height))
+                    var alteredX = x;
+                    var alteredY = y;
+                    var alteredIsOnMap = true;
+                    var alteredDirectionLog = new int[width, height];
+                    alteredDirectionLog[alteredX,alteredY] = alteredDirection;
+                    while (alteredIsOnMap)
                     {
-                        var anotherX = alteredX + Day06Directions[alteredDirection].x;
-                        var anotherY = alteredY + Day06Directions[alteredDirection].y;
-                        
-                        if (directionLog[alteredX, alteredY] == alteredDirection
-                            || IsOnMap(anotherX, anotherY, width, height)
-                            && lines[anotherY][anotherX] == '#' 
-                            && directionLog[alteredX, alteredY] == NextDirection(alteredDirection)
-                            )
+                        var alteredNextX = alteredX + Day06Directions[alteredDirection].x;
+                        var alteredNextY = alteredY + Day06Directions[alteredDirection].y;
+                        alteredIsOnMap = IsOnMap(alteredNextX, alteredNextY, width, height); 
+                        if (alteredIsOnMap)
                         {
-                            obstacles++;
-                            pathLog[nextX, nextY] = '0';
-                            break;
+                            if (alteredNextX == x && alteredNextY == y && alteredDirection == direction
+                                || alteredDirectionLog[alteredNextX,alteredNextY] == NextDirection(alteredDirection)
+                                )
+                            {
+                                obstacles++;
+                                pathLog[nextX, nextY] = '0';
+                                break;
+                            }
+
+                            if (lines[alteredNextY][alteredNextX] == '#')
+                            {
+                                alteredDirection = NextDirection(alteredDirection);
+                            }
+                            else
+                            {
+                                steps++;
+                                alteredX = alteredNextX;
+                                alteredY = alteredNextY;
+                                alteredDirectionLog[alteredX,alteredY] = alteredDirection;
+                            }
                         }
-                        
-                        alteredX += Day06Directions[alteredDirection].x;
-                        alteredY += Day06Directions[alteredDirection].y;
                     }
-                    
+
+                    steps++;
                     x = nextX;
                     y = nextY;
                     if (pathLog[x, y] == 0)

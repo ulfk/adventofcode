@@ -4950,7 +4950,7 @@ SASMMMASMMMSSSMSSXMSAMXSMMXMXMAMSSMMSXMSXMMSMMMSSMSMSMSXSXSSMMSMSSSXMASMMXSXSSXM
     public void Day06_2_Final()
     {
         var result = AdventOfCode2024Lib.Day06_2(Day06_Final);
-        result.Should().Be(0); // 1489 is too low
+        result.Should().Be(0); // 1489 is too low, 1827 is too high, 1659 is wrong
     }
     
     #endregion
