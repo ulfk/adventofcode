@@ -654,4 +654,158 @@ public static class AdventOfCode2024Lib
     }
 
     #endregion
+    
+    #region Day07
+
+    public static long Day07_1(string input)
+    {
+        long sum = 0;
+        var lines = SplitLines(input);
+        IEnumerable<(long result, long[] numbers)> equations = lines.Select(l =>
+        {
+            var temp = l.Split(':');
+            var result = long.Parse(temp[0]);
+            var numbers = temp[1].Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(long.Parse).ToArray();
+            return (result, numbers);
+        });
+
+        foreach (var equation in equations)
+        {
+            var operators = new int[equation.numbers.Length - 1];
+            var matched = false;
+            var endOfVariations = false;
+            while (!matched && !endOfVariations)
+            {
+                matched = DoesResultMatch(equation.result, equation.numbers, operators);
+                if (!matched)
+                {
+                    endOfVariations = NextStepForOperators(operators);
+                }
+            }
+            
+            if (matched) sum += equation.result;
+        }
+        return sum;
+    }
+
+    /// <summary>
+    /// Execute the calculation and check against given result
+    /// </summary>
+    /// <param name="result"></param>
+    /// <param name="numbers"></param>
+    /// <param name="operators"></param>
+    /// <returns></returns>
+    private static bool DoesResultMatch(long result, long[] numbers, int[] operators)
+    {
+        var calcResult = numbers[0];
+        for (var idx = 1; idx < numbers.Length; idx++)
+        {
+            if (operators[idx - 1] == 0) calcResult += numbers[idx];
+            else calcResult *= numbers[idx];
+        }
+        
+        return calcResult == result;
+    }
+
+    /// <summary>
+    /// Next step in operator variations.
+    /// </summary>
+    /// <param name="operators"></param>
+    /// <returns>false, if there are variations left, true if reached end of possible variations</returns>
+    private static bool NextStepForOperators(int[] operators)
+    {
+        for (var idx = 0; idx < operators.Length; idx++)
+        {
+            if (idx == operators.Length - 1 && operators[idx] == 1) return true;
+
+            operators[idx]++;
+            if (operators[idx] > 1)
+            {
+                operators[idx] = 0;
+            }
+            else break;
+        }
+
+        return false;
+    }
+    
+    public static long Day07_2(string input)
+    {
+        long sum = 0;
+        var lines = SplitLines(input);
+        IEnumerable<(long result, long[] numbers)> equations = lines.Select(l =>
+        {
+            var temp = l.Split(':');
+            var result = long.Parse(temp[0]);
+            var numbers = temp[1].Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(long.Parse).ToArray();
+            return (result, numbers);
+        });
+
+        foreach (var equation in equations)
+        {
+            var operators = new int[equation.numbers.Length - 1];
+            var matched = false;
+            var endOfVariations = false;
+            while (!matched && !endOfVariations)
+            {
+                matched = DoesResultMatch2(equation.result, equation.numbers, operators);
+                if (!matched)
+                {
+                    endOfVariations = NextStepForOperators2(operators);
+                }
+            }
+            
+            if (matched) sum += equation.result;
+        }
+        return sum;
+    }
+
+    /// <summary>
+    /// Execute the calculation and check against given result
+    /// </summary>
+    /// <param name="result"></param>
+    /// <param name="numbers"></param>
+    /// <param name="operators"></param>
+    /// <returns></returns>
+    private static bool DoesResultMatch2(long result, long[] numbers, int[] operators)
+    {
+        var calcResult = numbers[0];
+        for (var idx = 1; idx < numbers.Length; idx++)
+        {
+            if (operators[idx - 1] == 0) calcResult += numbers[idx];
+            else if (operators[idx - 1] == 1) calcResult *= numbers[idx];
+            else
+            {
+                calcResult = long.Parse($"{calcResult.ToString()}{numbers[idx].ToString()}");
+            }
+        }
+        
+        return calcResult == result;
+    }
+
+    /// <summary>
+    /// Next step in operator variations.
+    /// </summary>
+    /// <param name="operators"></param>
+    /// <returns>false, if there are variations left, true if reached end of possible variations</returns>
+    private static bool NextStepForOperators2(int[] operators)
+    {
+        for (var idx = 0; idx < operators.Length; idx++)
+        {
+            if (idx == operators.Length - 1 && operators[idx] == 2) return true;
+
+            operators[idx]++;
+            if (operators[idx] > 2)
+            {
+                operators[idx] = 0;
+            }
+            else break;
+        }
+
+        return false;
+    }    
+    
+    #endregion
+
+
 }
