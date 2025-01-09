@@ -15,8 +15,19 @@ public static class AdventOfCode2024Lib
     
     #region Day01
 
-    public static long Day01_1(List<int> first, List<int> second)
+    private static (List<long> first, List<long> second) ParseDay01Input(string input)
     {
+        var numbers = SplitLines(input).Select(line =>
+            line.Split(" ", StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).Select(long.Parse)
+                .ToArray()).ToList();
+        List<long> first = numbers.Select(x => x[0]).ToList();
+        List<long> second = numbers.Select(x => x[1]).ToList();
+        return (first, second);
+    }
+
+    public static long Day01_1(string input)
+    {
+        var (first, second) = ParseDay01Input(input);
         long sum = 0;
         first.Sort();
         second.Sort();
@@ -29,8 +40,9 @@ public static class AdventOfCode2024Lib
         return sum;
     }
     
-    public static long Day01_2(List<int> first, List<int> second)
+    public static long Day01_2(string input)
     {
+        var (first, second) = ParseDay01Input(input);
         long sum = 0;
         var secondGrouped = second.GroupBy(x => x).ToList();
 
