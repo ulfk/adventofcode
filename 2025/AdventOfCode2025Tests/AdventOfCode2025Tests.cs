@@ -4192,23 +4192,10 @@ R24";
     }
     
     [TestMethod]
-    public void Day01_2_Dummy2()
-    {
-        var result = AdventOfCode2025Lib.Day01_2("L50\nL200\nR2");
-        result.Should().Be(3);
-    }
-    
-    [TestMethod]
     public void Day01_2_Test()
     {
-        // 5141 probably too low
-        // 5743 too low
-        // 5849 wrong
-        // 5950 too high
-        // 6126 too high
-        
         var result = AdventOfCode2025Lib.Day01_2(Day01_Final);
-        result.Should().Be(0);
+        result.Should().Be(5937);
     }    
     
     #endregion

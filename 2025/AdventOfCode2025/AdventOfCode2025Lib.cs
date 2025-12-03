@@ -37,6 +37,7 @@ public static class AdventOfCode2025Lib
 
         return zeroCounter;
     }
+
     
     public static long Day01_2(string input)
     {
@@ -45,42 +46,33 @@ public static class AdventOfCode2025Lib
         long zeroCounter = 0;
         foreach (var move in moves)
         {
-            var nextDial = dial + move;
-            var zeroHits = 0;
-            
-            if (nextDial >= 100)
+            if (move > 0)
             {
-                while (nextDial >= 100)
+                var moveVal = move;
+                while (dial + moveVal >= 100)
                 {
-                    nextDial -= 100;
-                    zeroHits++;
+                    moveVal -= 100;
+                    zeroCounter++;
                 }
-            }
-            else if (nextDial < 0 && nextDial > -100 && dial == 0)
-            {
-                nextDial += 100;
-            }
-            else if (nextDial < 0)
-            {
-                while (nextDial < 0)
-                {
-                    nextDial += 100;
-                    zeroHits++;
-                    if (nextDial < 0 && nextDial > -100 && dial == 0)
-                    {
-                        nextDial += 100;
-                    }
-                }
-            }
-            else if (dial != nextDial && nextDial == 0)
-            {
-                zeroHits = 1;
-            }
 
-            zeroCounter += zeroHits;
-            dial = nextDial;
+                dial += moveVal;
+            }
+            else
+            {
+                var moveVal = move;
+                var addValue = (dial == 0 ? 0 : 1);
+                while (moveVal + dial < 0)
+                {
+                    moveVal += 100;
+                    zeroCounter += addValue;
+                    if (addValue == 0) addValue = 1;
+                }
+                
+                dial += moveVal;
+                zeroCounter += (dial == 0 ? 1 : 0);
+            }
         }
-
+        
         return zeroCounter;
     }
     
